@@ -1,3 +1,3 @@
-const Blync = require('./classes/Blync');
+import { Blync } from './classes/Blync'
 
-module.exports = Blync;
+module.exports = Blync
