@@ -1,3 +1,3 @@
-import { Blync } from './classes/Blync'
+import { BlyncConnector } from './classes/BlyncConnector'
 
-module.exports = Blync
+module.exports = BlyncConnector

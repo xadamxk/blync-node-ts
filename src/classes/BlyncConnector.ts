@@ -1,9 +1,9 @@
 import hid from 'node-hid'
-import { BlyncLightDevices } from '../enums/BlyncLightDevices'
+import { BlyncLightDevices } from '../enums'
 import { BlyncProduct } from '../interfaces/BlyncProduct'
-import { HIDDevice } from './HIDDevice'
+import { BlyncDevice } from './BlyncDevice'
 
-export class Blync {
+export class BlyncConnector {
   // Blync Light info obtained from DeviceAccess.cs
   blyncProducts: BlyncProduct[] = [
     new BlyncProduct(
@@ -17,7 +17,7 @@ export class Blync {
     new BlyncProduct('2c0d', '000a', BlyncLightDevices.BLYNCLIGHT_MINI, 13),
   ]
 
-  getDevices(): HIDDevice[] {
+  getDevices(): BlyncDevice[] {
     const hidDevices = hid.devices() || []
 
     return hidDevices
@@ -37,10 +37,10 @@ export class Blync {
         // && dev.interface === -1;
       })
       .map((blyncDevice: hid.Device) => {
-        return new HIDDevice(new hid.HID(blyncDevice.path || ''))
+        return new BlyncDevice(new hid.HID(blyncDevice.path || ''))
       })
   }
-  getDevice(index: number): HIDDevice {
+  getDevice(index: number): BlyncDevice {
     index = +index || 0
 
     const devices = this.getDevices()
