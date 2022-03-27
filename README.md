@@ -94,7 +94,7 @@ device.sendCommand(
 
 ## Contributing and Reporting Issues
 
-This project can be forked from [Github](https://github.com/xadamxk/blync-node-ts). Please issue pull requests from feature branches and follow [conventional commit standards](https://www.conventionalcommits.org/en/v1.0.0/).
+This project can be forked from [Github](https://github.com/xadamxk/blync-node-ts). Please issue pull requests from feature branches and follow [conventional commit standards](https://www.conventionalcommits.org/en/v1.0.0/). Submit bug reports or requests as issues - be sure to provide your operating system, Synclight device, and model number.
 
 ## Acknowledgements
 
