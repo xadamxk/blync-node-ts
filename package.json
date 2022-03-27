@@ -1,7 +1,7 @@
 {
   "name": "blync-node-ts",
   "version": "1.0.0",
-  "description": "Embrava Blynclight NodeJS SDK",
+  "description": "Embrava Blynclight NodeJS SDK (with TypeScript Support).",
   "keywords": [
     "embrava",
     "blynclight",
