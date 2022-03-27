@@ -1,17 +1,23 @@
 import hid from 'node-hid'
 import { toInt } from '../utilities'
-export class HIDDevice {
+
+export class BlyncDevice {
   hidDevice: hid.HID
 
-  // TODO: dont default to ''
   constructor(hidDevice: hid.HID) {
     this.hidDevice = hidDevice
   }
 
+  public turnOff(): void {
+    // TODO: Turn off sound as well
+    this.sendCommand(0, 0, 0, 1)
+  }
+
   public sendCommand(
-    red: 255,
-    green: 255,
-    blue: 255,
+    red = 255,
+    green = 255,
+    blue = 255,
+    lightControl = 0b000000,
     dim = false,
     blink = 0
   ): void {
@@ -21,7 +27,6 @@ export class HIDDevice {
     const blueValue = toInt(blue)
     const blinkValue = toInt(blink)
 
-    let lightControl = 0b000000
     // TODO: Light control
     // Bit0: 0 - Light On, 1 - Light Off
     // Bit1: 0 - No Dim (Full Brightness), 1 - Dim by 50%
