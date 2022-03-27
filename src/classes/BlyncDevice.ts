@@ -31,10 +31,24 @@ export class BlyncDevice {
     const greenValue = toInt(green)
     const blueValue = toInt(blue)
 
-    // Bit0: 1 - Light On, 0 - Light Off
-    // Bit1: 0 - No Dim (Full Brightness), 1 - Dim by 50%
-    // Bit2: 0 - No Flash, 1- Start Flash (Blink)
-    // Bit5-Bit3 - Flash speed - 001 - slow, 010 - medium, 100- fast
+    /**
+     * Light Byte breakdown
+     Bit0 Light Status:
+      - 0 : Light On
+      - 1 : Light Off
+     Bit1 Light Level:
+      - 0 : Full (Brightness)
+      - 1 : Dim (50% Brightness)
+     Bit2 Blink Status:
+      - 0 : No Flash
+      - 1 : Start Flash (Blink)
+     Bit5-Bit3 Blink speed:
+      - 001 : Slow
+      - 010 : Medium
+      - 100 : Fast
+     */
+
+    // blinkSpeedBits combines blink status with blink speed
     const lightByte = lightStatusBit + lightLevelBit + blinkSpeedBits
 
     // TODO: Music controls
