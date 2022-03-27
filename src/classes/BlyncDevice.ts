@@ -2,6 +2,7 @@ import hid from 'node-hid'
 import { toInt } from '../utilities'
 import { BlyncLightByte } from './BlyncLightByte'
 import { BlyncSoundOptionsByte } from './BlyncSoundOptionsByte'
+import { BlyncSoundVolumeByte } from './BlyncSoundVolumeByte'
 
 export class BlyncDevice {
   hidDevice: hid.HID
@@ -11,7 +12,6 @@ export class BlyncDevice {
   }
 
   public turnOff(): void {
-    // TODO: Turn off sound as well
     this.sendCommand()
   }
 
@@ -20,20 +20,13 @@ export class BlyncDevice {
     green = 255,
     blue = 255,
     lightByte = new BlyncLightByte(),
-    soundOptions = new BlyncSoundOptionsByte()
+    soundOptions = new BlyncSoundOptionsByte(),
+    volumeOptions = new BlyncSoundVolumeByte()
   ): void {
     // Convert colors to integers safely
     const redValue = toInt(red)
     const greenValue = toInt(green)
     const blueValue = toInt(blue)
-
-    // TODO: Music controls
-
-    // SoundVolumeByte
-    //musicControl2 byte => Bit7-Bit0
-    //Bit3-Bit0: 1-10 corresponding from 10% volume to 100% volume respectively, total 10 level volumes
-    //Bit6-Bit4: 000
-    //Bit7: 0 - UnMute, 1 - Mute Volume
 
     const commandBuffer = []
 
@@ -44,7 +37,7 @@ export class BlyncDevice {
     commandBuffer[3] = blueValue
     commandBuffer[4] = lightByte.getByteValue()
     commandBuffer[5] = soundOptions.getByteValue()
-    commandBuffer[6] = 0 // musicControl2
+    commandBuffer[6] = volumeOptions.getByteValue()
     commandBuffer[7] = 0
     commandBuffer[8] = 34 // based on chipset (usb30 = 34, Tenx10 = product control code)
 

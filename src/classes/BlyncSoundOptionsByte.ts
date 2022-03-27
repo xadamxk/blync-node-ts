@@ -18,7 +18,7 @@ import {
     - 0 : Stop repeat
     - 1 : Play repeat
 
-    Bit7-6 Nothing 
+    Bit7-6 Nothing:
 */
 export class BlyncSoundOptionsByte {
   private musicFilename: BlyncSoundsEnum
