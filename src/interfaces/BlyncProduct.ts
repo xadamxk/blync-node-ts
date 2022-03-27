@@ -1,21 +1,21 @@
-import { BlyncLightDevices } from '../enums/BlyncLightDevices'
+import { BlyncLightDevices } from '../enums'
 import { toInt } from '../utilities'
 
 export class BlyncProduct {
   private vendorId: string // ex. 0e53
   private productId: string // ex. 000a
-  private name: BlyncLightDevices
+  private deviceName: BlyncLightDevices
   private deviceType: number
 
   constructor(
     vendorId: string,
     productId: string,
-    name: BlyncLightDevices,
+    deviceName: BlyncLightDevices,
     deviceType: number
   ) {
     this.vendorId = vendorId
     this.productId = productId
-    this.name = name
+    this.deviceName = deviceName
     this.deviceType = deviceType
   }
 
