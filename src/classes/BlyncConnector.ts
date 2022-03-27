@@ -6,20 +6,12 @@ import { BlyncDevice } from './BlyncDevice'
 export class BlyncConnector {
   // Blync Light info obtained from DeviceAccess.cs
   blyncProducts: BlyncProduct[] = [
-    new BlyncProduct(
-      '2c0d',
-      '0009',
-      BlyncLightProductsEnum.BLYNCLIGHT_EMBRAVA_EMBEDDED,
-      12
-    ),
+    // eslint-disable-next-line prettier/prettier
+    new BlyncProduct('2c0d', '0009', BlyncLightProductsEnum.BLYNCLIGHT_EMBRAVA_EMBEDDED, 12),
     new BlyncProduct('0e53', '2519', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 7),
     new BlyncProduct('2c0d', '0003', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 7),
-    new BlyncProduct(
-      '2c0d',
-      '000a',
-      BlyncLightProductsEnum.BLYNCLIGHT_MINI,
-      13
-    ),
+    // eslint-disable-next-line prettier/prettier
+    new BlyncProduct('2c0d', '000a', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 13),
   ]
 
   getDevices(): BlyncDevice[] {

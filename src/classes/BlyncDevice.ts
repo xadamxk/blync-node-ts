@@ -5,6 +5,7 @@ import {
   BlyncLightStatusEnum,
 } from '../enums'
 import { toInt } from '../utilities'
+import { BlyncCommandLightByte } from './BlyncCommandLightByte'
 
 export class BlyncDevice {
   hidDevice: hid.HID
@@ -15,16 +16,14 @@ export class BlyncDevice {
 
   public turnOff(): void {
     // TODO: Turn off sound as well
-    this.sendCommand(0, 0, 0, BlyncLightStatusEnum.OFF)
+    this.sendCommand(0, 0, 0, new BlyncCommandLightByte())
   }
 
   public sendCommand(
     red = 255,
     green = 255,
     blue = 255,
-    lightStatusBit = BlyncLightStatusEnum.OFF,
-    lightLevelBit = BlyncLightLevelEnum.FULL,
-    blinkSpeedBits = BlyncBlinkSpeedEnum.OFF
+    blyncLightByte: BlyncCommandLightByte
   ): void {
     // Convert colors to integers safely
     const redValue = toInt(red)
@@ -48,20 +47,19 @@ export class BlyncDevice {
       - 100 : Fast
      */
 
-    // blinkSpeedBits combines blink status with blink speed
-    const lightByte = lightStatusBit + lightLevelBit + blinkSpeedBits
-
     // TODO: Music controls
+    // SoundOptionsByte
     //musicControl1 byte => Bit7-Bit0
     //Bit3-Bit0: Choose music, corresponding from the music 1 to music 10 respectively,total 10 music
     //Bit4: 0 - Stop Playing Music, 1 - Start Music Play
     //Bit5: 0 - Stop Music Repeat, 1 - Start Music Repeat
     //Bit6-Bit7: 00
 
+    // SoundVolumeByte
     //musicControl2 byte => Bit7-Bit0
     //Bit3-Bit0: 1-10 corresponding from 10% volume to 100% volume respectively, total 10 level volumes
     //Bit6-Bit4: 000
-    //Bit7: 0 - Clear Mute, 1 - Mute Volume
+    //Bit7: 0 - UnMute, 1 - Mute Volume
 
     const commandBuffer = []
 
@@ -70,7 +68,7 @@ export class BlyncDevice {
     commandBuffer[1] = redValue
     commandBuffer[2] = greenValue
     commandBuffer[3] = blueValue
-    commandBuffer[4] = lightByte
+    commandBuffer[4] = blyncLightByte.getByteValue()
     commandBuffer[5] = 0 // musicControl1
     commandBuffer[6] = 0 // musicControl2
     commandBuffer[7] = 0
