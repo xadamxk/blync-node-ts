@@ -1,6 +1,6 @@
 import hid from 'node-hid'
-import { BlyncLightDevices } from '../enums'
-import { BlyncProduct } from '../interfaces/BlyncProduct'
+import { BlyncLightProductsEnum } from '../enums'
+import { BlyncProduct } from './BlyncProduct'
 import { BlyncDevice } from './BlyncDevice'
 
 export class BlyncConnector {
@@ -9,12 +9,17 @@ export class BlyncConnector {
     new BlyncProduct(
       '2c0d',
       '0009',
-      BlyncLightDevices.BLYNCLIGHT_EMBRAVA_EMBEDDED,
+      BlyncLightProductsEnum.BLYNCLIGHT_EMBRAVA_EMBEDDED,
       12
     ),
-    new BlyncProduct('0e53', '2519', BlyncLightDevices.BLYNCLIGHT_MINI, 7),
-    new BlyncProduct('2c0d', '0003', BlyncLightDevices.BLYNCLIGHT_MINI, 7),
-    new BlyncProduct('2c0d', '000a', BlyncLightDevices.BLYNCLIGHT_MINI, 13),
+    new BlyncProduct('0e53', '2519', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 7),
+    new BlyncProduct('2c0d', '0003', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 7),
+    new BlyncProduct(
+      '2c0d',
+      '000a',
+      BlyncLightProductsEnum.BLYNCLIGHT_MINI,
+      13
+    ),
   ]
 
   getDevices(): BlyncDevice[] {

@@ -1,4 +1,9 @@
 import hid from 'node-hid'
+import {
+  BlyncBlinkSpeedEnum,
+  BlyncLightLevelEnum,
+  BlyncLightStatusEnum,
+} from '../enums'
 import { toInt } from '../utilities'
 
 export class BlyncDevice {
@@ -10,46 +15,27 @@ export class BlyncDevice {
 
   public turnOff(): void {
     // TODO: Turn off sound as well
-    this.sendCommand(0, 0, 0, 1)
+    this.sendCommand(0, 0, 0, BlyncLightStatusEnum.OFF)
   }
 
   public sendCommand(
     red = 255,
     green = 255,
     blue = 255,
-    lightControl = 0b000000,
-    dim = false,
-    blink = 0
+    lightStatusBit = BlyncLightStatusEnum.OFF,
+    lightLevelBit = BlyncLightLevelEnum.FULL,
+    blinkSpeedBits = BlyncBlinkSpeedEnum.OFF
   ): void {
-    // make sure the parameters are all integer
+    // Convert colors to integers safely
     const redValue = toInt(red)
     const greenValue = toInt(green)
     const blueValue = toInt(blue)
-    const blinkValue = toInt(blink)
 
-    // TODO: Light control
-    // Bit0: 0 - Light On, 1 - Light Off
+    // Bit0: 1 - Light On, 0 - Light Off
     // Bit1: 0 - No Dim (Full Brightness), 1 - Dim by 50%
-    if (dim) {
-      lightControl += 0b000010
-    }
-
     // Bit2: 0 - No Flash, 1- Start Flash (Blink)
     // Bit5-Bit3 - Flash speed - 001 - slow, 010 - medium, 100- fast
-    switch (blinkValue) {
-      case 0:
-        // no blink
-        break
-      case 1: // slow
-        lightControl += 0b001100
-        break
-      case 2: // medium
-        lightControl += 0b010100
-        break
-      case 3: // fast
-        lightControl += 0b1100100
-        break
-    }
+    const lightByte = lightStatusBit + lightLevelBit + blinkSpeedBits
 
     // TODO: Music controls
     //musicControl1 byte => Bit7-Bit0
@@ -70,11 +56,11 @@ export class BlyncDevice {
     commandBuffer[1] = redValue
     commandBuffer[2] = greenValue
     commandBuffer[3] = blueValue
-    commandBuffer[4] = lightControl
+    commandBuffer[4] = lightByte
     commandBuffer[5] = 0 // musicControl1
     commandBuffer[6] = 0 // musicControl2
     commandBuffer[7] = 0
-    commandBuffer[8] = 34
+    commandBuffer[8] = 34 // based on chipset (usb30 = 34, Tenx10 = product control code)
 
     this.hidDevice.write(commandBuffer)
   }
