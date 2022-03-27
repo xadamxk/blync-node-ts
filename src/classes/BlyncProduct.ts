@@ -1,16 +1,16 @@
-import { BlyncLightDevices } from '../enums'
+import { BlyncLightProductsEnum } from '../enums'
 import { toInt } from '../utilities'
 
 export class BlyncProduct {
   private vendorId: string // ex. 0e53
   private productId: string // ex. 000a
-  private deviceName: BlyncLightDevices
+  private deviceName: BlyncLightProductsEnum
   private deviceType: number
 
   constructor(
     vendorId: string,
     productId: string,
-    deviceName: BlyncLightDevices,
+    deviceName: BlyncLightProductsEnum,
     deviceType: number
   ) {
     this.vendorId = vendorId
@@ -19,6 +19,7 @@ export class BlyncProduct {
     this.deviceType = deviceType
   }
 
+  // TODO: Rename
   isBlyncMatch(givenVendorId: number, givenProductId: number): boolean {
     try {
       return (
