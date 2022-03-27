@@ -1,2 +1,5 @@
-export { BlyncLightDevices } from './BlyncLightDevices'
-export { BlyncSounds } from './BlyncSounds'
+export { BlyncLightProductsEnum } from './BlyncLightProductsEnum'
+export { BlyncSoundsEnum } from './BlyncSoundsEnum'
+export { BlyncBlinkSpeedEnum } from './BlyncBlinkSpeedEnum'
+export { BlyncLightLevelEnum } from './BlyncLightLevelEnum'
+export { BlyncLightStatusEnum } from './BlyncLightStatusEnum'

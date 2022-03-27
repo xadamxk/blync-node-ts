@@ -1,4 +1,4 @@
-export enum BlyncSounds {
+export enum BlyncSoundsEnum {
   STANDARD = 1,
   RINGADING = 2,
   INVADER = 3,

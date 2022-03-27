@@ -1,3 +1,19 @@
 import { BlyncConnector } from './classes/BlyncConnector'
+import {
+  BlyncLightProductsEnum,
+  BlyncSoundsEnum,
+  BlyncBlinkSpeedEnum,
+  BlyncLightLevelEnum,
+  BlyncLightStatusEnum,
+} from './enums'
 
-module.exports = BlyncConnector
+module.exports = {
+  // Classes
+  BlyncConnector,
+  // Enums
+  BlyncLightProductsEnum,
+  BlyncSoundsEnum,
+  BlyncBlinkSpeedEnum,
+  BlyncLightLevelEnum,
+  BlyncLightStatusEnum,
+}
