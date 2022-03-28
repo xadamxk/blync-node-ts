@@ -1,4 +1,4 @@
-import { BlyncSoundOptionsByte } from '../../src/classes'
+import { BlyncSoundOptionsByte } from '../../src/classes/BlyncSoundOptionsByte'
 import {
   BlyncSoundRepeatEnum,
   BlyncSoundStatusEnum,
@@ -14,9 +14,9 @@ describe('BlyncSoundOptionsByte', () => {
   test('should calculate the byte value for custom parameters', () => {
     const customBlyncLightByte = new BlyncSoundOptionsByte(
       BlyncSoundsEnum.STANDARD, // 1
-      BlyncSoundStatusEnum.PLAYING // 65536
-      BlyncSoundRepeatEnum.ON, // 1048576
+      BlyncSoundStatusEnum.PLAYING, // 16
+      BlyncSoundRepeatEnum.ON // 32
     )
-    expect(customBlyncLightByte.getByteValue()).toBe(1114113)
+    expect(customBlyncLightByte.getByteValue()).toBe(49)
   })
 })
