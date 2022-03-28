@@ -101,6 +101,7 @@ This project can be forked from [Github](https://github.com/xadamxk/blync-node-t
 - [blync-node](https://github.com/Offbeatmammal/blync-node)
 - [node-blync-USB30](https://github.com/julienstroheker/node-blync-USB30)
 - [node-blync](https://github.com/justmoon/node-blync)
+- [example-typescript-package](https://github.com/tomchen/example-typescript-package)
 
 ## TODO:
 
