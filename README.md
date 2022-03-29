@@ -43,18 +43,11 @@ const {
     // Classes
     BlyncConnector,
     BlyncLightByte,
-    BlyncSoundOptionsByte,
-    BlyncSoundVolumeByte,
+    BlyncColor,
     // Enums
-    BlyncLightProductsEnum,
-    BlyncSoundsEnum,
     BlyncBlinkSpeedEnum,
     BlyncLightLevelEnum,
     BlyncLightStatusEnum,
-    BlyncSoundStatusEnum,
-    BlyncSoundRepeatEnum,
-    BlyncSoundVolumeEnum,
-    BlyncSoundMuteStatusEnum,
 } = require('blync-node-ts')
 
  /* Turn light and sound off on exit */
@@ -69,28 +62,13 @@ const device = blyncConnector.getDevice(0);
 
 /* Set color (white) - full brightness - no blink */
 device.sendCommand(
-    255,
-    255,
-    255,
+    new BlyncColor(255, 255, 255),
     new BlyncLightByte(BlyncLightStatusEnum.ON, BlyncLightLevelEnum.FULL, BlyncBlinkSpeedEnum.OFF)
 );
 
-/* Set color (blue) - dim brightness - blink slow */
- device.sendCommand(
-     0,
-     255,
-     255,
-     new BlyncLightByte(BlyncLightStatusEnum.ON, BlyncLightLevelEnum.DIM, BlyncBlinkSpeedEnum.SLOW)
- );
-
- /* play circuit sound at 50% volume */
- device.sendCommand(
-     null,null,null,
-     new BlyncLightByte(),
-     new BlyncSoundOptionsByte(BlyncSoundsEnum.CIRCUIT, BlyncSoundStatusEnum.PLAYING, BlyncSoundRepeatEnum.ON),
-     new BlyncSoundVolumeByte(BlyncSoundVolumeEnum.PCT_100, BlyncSoundMuteStatusEnum.UNMUTE)
- );
 ```
+
+More examples can be found in `/examples`.
 
 ## Contributing and Reporting Issues
 
