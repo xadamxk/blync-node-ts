@@ -1,6 +1,5 @@
 import hid from 'node-hid'
 import { BlyncLightLevelEnum, BlyncLightStatusEnum } from '../enums'
-import { toInt } from '../utilities'
 import { BlyncColor } from './BlyncColor'
 import { BlyncLightByte } from './BlyncLightByte'
 import { BlyncSoundOptionsByte } from './BlyncSoundOptionsByte'
