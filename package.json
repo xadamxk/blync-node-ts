@@ -21,14 +21,12 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "build": "tsc",
+    "clean": "node tools/cleanup",
+    "postinstall": "husky install",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "postinstall": "husky install",
     "run": "npm run build && npm run run:example",
     "run:example": "node examples/index.js",
     "test": "jest --no-cache --runInBand",
@@ -66,5 +64,8 @@
   "os": [
     "win32",
     "linux"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
