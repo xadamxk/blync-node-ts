@@ -57,6 +57,13 @@ const {
     BlyncSoundMuteStatusEnum,
 } = require('blync-node-ts')
 
+ /* Turn light and sound off on exit */
+ ['exit', 'uncaughtException', 'SIGINT', 'SIGTERM', 'SIGQUIT']
+  .forEach(signal => process.on(signal, () => {
+    device.turnOff();
+    process.exit();
+  }));
+
 const blyncConnector = new BlyncConnector();
 const device = blyncConnector.getDevice(0);
 
@@ -83,13 +90,6 @@ device.sendCommand(
      new BlyncSoundOptionsByte(BlyncSoundsEnum.CIRCUIT, BlyncSoundStatusEnum.PLAYING, BlyncSoundRepeatEnum.ON),
      new BlyncSoundVolumeByte(BlyncSoundVolumeEnum.PCT_100, BlyncSoundMuteStatusEnum.UNMUTE)
  );
-
- /* Turn light and sound off on exit */
- ['exit', 'uncaughtException', 'SIGINT', 'SIGTERM', 'SIGQUIT']
-  .forEach(signal => process.on(signal, () => {
-    device.turnOff();
-    process.exit();
-  }));
 ```
 
 ## Contributing and Reporting Issues
