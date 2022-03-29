@@ -1,8 +1,10 @@
 name: Semantic-Version
-on: push
-  branches:
-    - main
-    - master
+
+on:
+  push:
+    branches:
+      - main
+      - master
 jobs:
   test:
     runs-on: ubuntu-16.04
