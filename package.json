@@ -26,6 +26,8 @@
     "build": "tsc",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
+    "run": "npm run build && npm run run:example",
+    "run:example": "node examples/index.js",
     "test": "jest --no-cache --runInBand",
     "watch": "webpack"
   },
