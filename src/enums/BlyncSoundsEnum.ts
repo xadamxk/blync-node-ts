@@ -1,0 +1,13 @@
+export enum BlyncSoundsEnum {
+  STANDARD = 0b0001,
+  RINGADING = 0b0010,
+  INVADER = 0b0011,
+  CRYSTAL = 0b0100,
+  MILLIPEDE = 0b0101,
+  AZURE = 0b0110,
+  COGI = 0b0111,
+  TECHZOR = 0b1000,
+  FREEDOM = 0b1001,
+  CIRCUIT = 0b1010,
+  NO_SOUND = 0b1011,
+}

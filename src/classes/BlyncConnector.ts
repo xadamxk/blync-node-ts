@@ -1,23 +1,20 @@
 import hid from 'node-hid'
-import { BlyncLightDevices } from '../enums/BlyncLightDevices'
-import { BlyncProduct } from '../interfaces/BlyncProduct'
-import { HIDDevice } from './HIDDevice'
+import { BlyncLightProductsEnum } from '../enums'
+import { BlyncProduct } from './BlyncProduct'
+import { BlyncDevice } from './BlyncDevice'
 
-export class Blync {
+export class BlyncConnector {
   // Blync Light info obtained from DeviceAccess.cs
   blyncProducts: BlyncProduct[] = [
-    new BlyncProduct(
-      '2c0d',
-      '0009',
-      BlyncLightDevices.BLYNCLIGHT_EMBRAVA_EMBEDDED,
-      12
-    ),
-    new BlyncProduct('0e53', '2519', BlyncLightDevices.BLYNCLIGHT_MINI, 7),
-    new BlyncProduct('2c0d', '0003', BlyncLightDevices.BLYNCLIGHT_MINI, 7),
-    new BlyncProduct('2c0d', '000a', BlyncLightDevices.BLYNCLIGHT_MINI, 13),
+    // eslint-disable-next-line prettier/prettier
+    new BlyncProduct('2c0d', '0009', BlyncLightProductsEnum.BLYNCLIGHT_EMBRAVA_EMBEDDED, 12),
+    new BlyncProduct('0e53', '2519', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 7),
+    new BlyncProduct('2c0d', '0003', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 7),
+    // eslint-disable-next-line prettier/prettier
+    new BlyncProduct('2c0d', '000a', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 13),
   ]
 
-  getDevices(): HIDDevice[] {
+  getDevices(): BlyncDevice[] {
     const hidDevices = hid.devices() || []
 
     return hidDevices
@@ -37,10 +34,10 @@ export class Blync {
         // && dev.interface === -1;
       })
       .map((blyncDevice: hid.Device) => {
-        return new HIDDevice(new hid.HID(blyncDevice.path || ''))
+        return new BlyncDevice(new hid.HID(blyncDevice.path || ''))
       })
   }
-  getDevice(index: number): HIDDevice {
+  getDevice(index: number): BlyncDevice {
     index = +index || 0
 
     const devices = this.getDevices()
