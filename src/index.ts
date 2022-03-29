@@ -2,6 +2,7 @@ import { BlyncConnector } from './classes/BlyncConnector'
 import { BlyncLightByte } from './classes/BlyncLightByte'
 import { BlyncSoundOptionsByte } from './classes/BlyncSoundOptionsByte'
 import { BlyncSoundVolumeByte } from './classes/BlyncSoundVolumeByte'
+import { BlyncColor } from './classes/BlyncColor'
 import {
   BlyncLightProductsEnum,
   BlyncSoundsEnum,
@@ -20,6 +21,7 @@ module.exports = {
   BlyncLightByte,
   BlyncSoundOptionsByte,
   BlyncSoundVolumeByte,
+  BlyncColor,
   // Enums
   BlyncLightProductsEnum,
   BlyncSoundsEnum,
