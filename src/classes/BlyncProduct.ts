@@ -19,15 +19,19 @@ export class BlyncProduct {
     this.deviceType = deviceType
   }
 
-  // TODO: Rename
-  isBlyncMatch(givenVendorId: number, givenProductId: number): boolean {
+  // eslint-disable-next-line prettier/prettier
+  isVendorIdProductIdMatch(givenVendorId: number, givenProductId: number): boolean {
     try {
       return (
-        toInt(this.vendorId, 16) == givenVendorId &&
-        toInt(this.productId, 16) == givenProductId
+        // eslint-disable-next-line prettier/prettier
+        toInt(this.vendorId, 16) == givenVendorId && toInt(this.productId, 16) == givenProductId
       )
     } catch (err) {
       return false
     }
+  }
+
+  isProductNameMatch(productName: BlyncLightProductsEnum): boolean {
+    return this.deviceName == productName
   }
 }

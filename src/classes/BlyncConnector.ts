@@ -14,7 +14,16 @@ export class BlyncConnector {
     new BlyncProduct('2c0d', '000a', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 13),
   ]
 
-  getDevices(): BlyncDevice[] {
+  private indexCheck = (index: number, devices: BlyncDevice[]) => {
+    if (index < 0) {
+      throw new Error('Invalid device index')
+    }
+    if (index > devices.length) {
+      throw new Error('Device index #' + index + ' not found')
+    }
+  }
+
+  private getDevicesByVendorIdProductId(): BlyncDevice[] {
     const hidDevices = hid.devices() || []
 
     return hidDevices
@@ -23,10 +32,8 @@ export class BlyncConnector {
         return (
           hidDevice.path &&
           this.blyncProducts.some((blyncProduct: BlyncProduct) => {
-            return blyncProduct.isBlyncMatch(
-              hidDevice.vendorId,
-              hidDevice.productId
-            )
+            // eslint-disable-next-line prettier/prettier
+            return blyncProduct.isVendorIdProductIdMatch(hidDevice.vendorId, hidDevice.productId)
           })
         )
         // TODO: Test on Linux and OSX
@@ -37,17 +44,38 @@ export class BlyncConnector {
         return new BlyncDevice(new hid.HID(blyncDevice.path || ''))
       })
   }
-  getDevice(index: number): BlyncDevice {
-    index = +index || 0
 
-    const devices = this.getDevices()
-    if (index < 0) {
-      throw new Error('Invalid device index')
-    }
-    if (index >= devices.length) {
-      throw new Error('Device index #' + index + ' not found')
-    }
+  // eslint-disable-next-line prettier/prettier
+  private getDevicesByProductName(productName: BlyncLightProductsEnum): BlyncDevice[] {
+    const hidDevices = hid.devices() || []
+    return hidDevices
+      .filter((hidDevice: hid.Device) => {
+        return (
+          hidDevice.path &&
+          this.blyncProducts.some((blyncProduct: BlyncProduct) => {
+            return (
+              blyncProduct.isProductNameMatch(productName) &&
+              // eslint-disable-next-line prettier/prettier
+              blyncProduct.isVendorIdProductIdMatch(hidDevice.vendorId, hidDevice.productId)
+            )
+          })
+        )
+      })
+      .map((blyncDevice: hid.Device) => {
+        return new BlyncDevice(new hid.HID(blyncDevice.path || ''))
+      })
+  }
 
-    return devices[index]
+  getDevice(index = 0): BlyncDevice {
+    const devicesByVendorIdProductId = this.getDevicesByVendorIdProductId()
+    this.indexCheck(index, devicesByVendorIdProductId)
+    return devicesByVendorIdProductId[index]
+  }
+
+  // eslint-disable-next-line prettier/prettier
+  getDeviceByProductName(productName: BlyncLightProductsEnum, index = 0): BlyncDevice {
+    const devicesByProductName = this.getDevicesByProductName(productName)
+    this.indexCheck(index, devicesByProductName)
+    return devicesByProductName[index]
   }
 }
