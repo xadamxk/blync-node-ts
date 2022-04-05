@@ -34,9 +34,8 @@ export class BlyncConnector {
 
   private getDevicesByVendorIdProductId(): BlyncDevice[] {
     const hidDevices = hid.devices() || []
-
-    return hidDevices
-      .filter((hidDevice: hid.Device) => {
+    try {
+      const devices = hidDevices.filter((hidDevice: hid.Device) => {
         // Check if hid device matches any blync devices
         return (
           hidDevice.path &&
@@ -45,20 +44,27 @@ export class BlyncConnector {
             return blyncProduct.isVendorIdProductIdMatch(hidDevice.vendorId, hidDevice.productId)
           })
         )
-        // TODO: Test on Linux and OSX
-        // on macOS/Windows, dev.interface === -1, but on Raspbian shows as 0, so removing for now:
-        // && dev.interface === -1;
       })
-      .map((blyncDevice: hid.Device) => {
+
+      const blyncDevices = devices.map((blyncDevice: hid.Device) => {
         return new BlyncDevice(new hid.HID(blyncDevice.path || ''))
       })
+
+      if (!blyncDevices || blyncDevices.length === 0) {
+        throw Error(`No Blync devices found for known hardware ids.`)
+      }
+
+      return blyncDevices
+    } catch (err: any) {
+      throw Error(err)
+    }
   }
 
   // eslint-disable-next-line prettier/prettier
   private getDevicesByProductName(productName: BlyncLightProductsEnum): BlyncDevice[] {
     const hidDevices = hid.devices() || []
-    return hidDevices
-      .filter((hidDevice: hid.Device) => {
+    try {
+      const devices = hidDevices.filter((hidDevice: hid.Device) => {
         return (
           hidDevice.path &&
           this.blyncProducts.some((blyncProduct: BlyncProduct) => {
@@ -70,9 +76,16 @@ export class BlyncConnector {
           })
         )
       })
-      .map((blyncDevice: hid.Device) => {
+      const blyncDevices = devices.map((blyncDevice: hid.Device) => {
         return new BlyncDevice(new hid.HID(blyncDevice.path || ''))
       })
+      if (!blyncDevices || blyncDevices.length === 0) {
+        throw Error(`No Blync devices found for product name: '${productName}'`)
+      }
+      return blyncDevices
+    } catch (err: any) {
+      throw Error(err)
+    }
   }
 
   getDevice(index = 0): BlyncDevice {
