@@ -33,7 +33,9 @@ const Util = {
 }
 
 const blyncConnector = new BlyncConnector()
-const device = blyncConnector.getDevice(0)
+const device = blyncConnector.getDeviceByProductName(
+  BlyncLightProductsEnum.BLYNCLIGHT_MINI
+)
 
 /* Turn light and sound off on exit */
 ;['exit', 'uncaughtException', 'SIGQUIT', 'SIGINT'].forEach((signal) =>
@@ -99,5 +101,6 @@ for (var i = 0; i < colorCycleSize; i++) {
   Util.wait(1, 500)
 }
 
+/* Cycle through colors */
 device.setLightBrightness(BlyncLightLevelEnum.DIM)
 Util.wait(5)

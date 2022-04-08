@@ -9,7 +9,12 @@ describe('BlyncProduct', () => {
       BlyncLightProductsEnum.BLYNCLIGHT_MINI,
       13
     )
-    expect(myBlyncProduct.isBlyncMatch(11277, 10)).toBe(true)
+    expect(myBlyncProduct.isVendorIdProductIdMatch(11277, 10)).toBe(true)
+  })
+
+  test('should match valid given product name', () => {
+    const myBlyncProduct = new BlyncProduct('', '', BlyncLightProductsEnum.BLYNCLIGHT_MINI, 1)
+    expect(myBlyncProduct.isProductNameMatch(BlyncLightProductsEnum.BLYNCLIGHT_MINI)).toBe(true)
   })
 
   test('shouldnt match invalid given vendor and product id', () => {
@@ -19,6 +24,11 @@ describe('BlyncProduct', () => {
       BlyncLightProductsEnum.BLYNCLIGHT_WIRELESS,
       13
     )
-    expect(myBlyncProduct.isBlyncMatch(11277, 9)).toBe(false)
+    expect(myBlyncProduct.isVendorIdProductIdMatch(11277, 9)).toBe(false)
+  })
+
+  test('shouldnt match invalid given product name', () => {
+    const myBlyncProduct = new BlyncProduct('', '', BlyncLightProductsEnum.BLYNCLIGHT_WIRELESS, 1)
+    expect(myBlyncProduct.isProductNameMatch(BlyncLightProductsEnum.BLYNCLIGHT_MINI)).toBe(false)
   })
 })
